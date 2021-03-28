@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Fontend-APITrello/static/css/main.d0a28b75.chunk.css",
+    "main.js": "/Fontend-APITrello/static/js/main.2282271c.chunk.js",
+    "main.js.map": "/Fontend-APITrello/static/js/main.2282271c.chunk.js.map",
+    "runtime-main.js": "/Fontend-APITrello/static/js/runtime-main.c921a0d9.js",
+    "runtime-main.js.map": "/Fontend-APITrello/static/js/runtime-main.c921a0d9.js.map",
+    "static/css/2.150d169a.chunk.css": "/Fontend-APITrello/static/css/2.150d169a.chunk.css",
+    "static/js/2.cfb47071.chunk.js": "/Fontend-APITrello/static/js/2.cfb47071.chunk.js",
+    "static/js/2.cfb47071.chunk.js.map": "/Fontend-APITrello/static/js/2.cfb47071.chunk.js.map",
+    "index.html": "/Fontend-APITrello/index.html",
+    "static/css/2.150d169a.chunk.css.map": "/Fontend-APITrello/static/css/2.150d169a.chunk.css.map",
+    "static/css/main.d0a28b75.chunk.css.map": "/Fontend-APITrello/static/css/main.d0a28b75.chunk.css.map",
+    "static/js/2.cfb47071.chunk.js.LICENSE.txt": "/Fontend-APITrello/static/js/2.cfb47071.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c921a0d9.js",
+    "static/css/2.150d169a.chunk.css",
+    "static/js/2.cfb47071.chunk.js",
+    "static/css/main.d0a28b75.chunk.css",
+    "static/js/main.2282271c.chunk.js"
+  ]
+}
