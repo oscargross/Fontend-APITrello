@@ -1,8 +1,7 @@
-import React, { useState, useLayoutEffect } from 'react';
-
-import { useHistory } from "react-router-dom";
-
+import React, { useState } from 'react';
+import { post } from '../services/axiosCard'
 import { Form, Container, Button, Col } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 import './Form.css'
 
 export default function FormCard() {
@@ -12,45 +11,50 @@ export default function FormCard() {
     pos: 'bottom',
     due: '',
     dueComplete: 'false',
-    idList: '605bcb467e18477f336b1f54',
     idLabels: '',
     urlSource: '',
   }
+
   const [formValues, setFormValues] = useState(initialValues);
+  const [nameList, setNameList] = useState({ nameList: 'A fazer' })
+  const history = useHistory()
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    console.log({ name, value, type, checked });
     const isCheckbox = type === 'checkbox';
+
     if (type == 'checkbox') {
       formValues[name] = checked
-
     } else {
       formValues[name] = value
     }
 
     const data = formValues[name] || {};
-
     const newValue = isCheckbox ? data : value;
     setFormValues({ ...formValues, [name]: newValue });
-    console.log(formValues)
 
   };
 
-
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
-    console.log('*** handleSubmit', data);
-  };
+    Object.keys(formValues).forEach((item) => {
 
+      if (formValues[item] == '') {
+        delete formValues[item]
+      }
 
+    });
 
+    await post({ data: formValues, query: nameList }).then((res) => {
+      setFormValues(initialValues)
+      setNameList({ nameList: 'A fazer' })
 
-
+      history.push({
+        pathname: '/list',
+        state: res.message,
+      });
+    })
+  }
 
   return (
     <Container className='container'>
@@ -63,17 +67,15 @@ export default function FormCard() {
 
           <Form.Group as={Col} className="coluna" controlId="formGridState">
             <Form.Label>Qual será sua lista</Form.Label>
-            <Form.Control as="select" name='idList' value={formValues.idList} onChange={handleInputChange}>
-              <option value="605bcb467e18477f336b1f54">A Fazer</option>
-              <option value="605bcb467e18477f336b1f55">Em Andamento</option>
-              <option value="605bcb467e18477f336b1f56">Concluído</option>
-
+            <Form.Control as="select" name='nameList' value={formValues.nameList} onChange={(e) => { setNameList({ nameList: e.target.value }) }}>
+              <option>A fazer</option>
+              <option>Em Andamento</option>
+              <option>Concluído</option>
             </Form.Control>
           </Form.Group>
         </Form.Row>
 
         <Form.Row>
-
           <Form.Group as={Col} className="coluna">
             <Form.Label>Data de entrega</Form.Label>
             <Form.Control type="date" name='due' placeholder="Data de entrega" value={formValues.due} onChange={handleInputChange} />
@@ -98,7 +100,6 @@ export default function FormCard() {
         <Form.Row>
           <Form.Group as={Col} className="coluna" >
             <Form.Label>Descrição</Form.Label>
-
             <Form.Control as="textarea" name='desc' rows={3} value={formValues.desc} onChange={handleInputChange} />
           </Form.Group>
 
@@ -114,7 +115,6 @@ export default function FormCard() {
                 type='checkbox'
                 id={'idLabels1'}
               // onChange={handleInputChange}
-
               />
               <Form.Check
                 value='605bcb46184d2c731b8fc585'
@@ -125,7 +125,6 @@ export default function FormCard() {
                 type='checkbox'
                 id={'idLabels2'}
               // onChange={handleInputChange}
-
               />
               <Form.Check
                 value='605bcb46184d2c731b8fc589'
@@ -136,7 +135,6 @@ export default function FormCard() {
                 type='checkbox'
                 id={'idLabels3'}
               // onChange={handleInputChange}
-
               />
               <Form.Check
                 value='605bcb46184d2c731b8fc58c'
@@ -147,7 +145,6 @@ export default function FormCard() {
                 type='checkbox'
                 id={'idLabels4'}
               // onChange={handleInputChange}
-
               />
               <Form.Check
                 value='605bcb46184d2c731b8fc58e'
@@ -158,26 +155,26 @@ export default function FormCard() {
                 type='checkbox'
                 id={'idLabels5'}
               // onChange={handleInputChange}
-
               />
             </div>
           </Form.Group>
         </Form.Row>
+
         <Form.Row>
           <Form.Group as={Col} className="coluna">
             <Form.Label>Insira uma imagem ao card (cole a url da imagem)</Form.Label>
             <Form.Control type="text" name='urlSource' placeholder="url imagem" value={formValues.urlSource} onChange={handleInputChange} />
           </Form.Group>
         </Form.Row>
+
         <Form.Row className="button">
-          <Button variant="primary" type="submit">
+         
+          <Button variant="primary" onClick={handleSubmit} type="submit">
             Enviar
           </Button>
         </Form.Row>
 
-
       </Form>
     </Container>
-  );
+  )
 }
-
